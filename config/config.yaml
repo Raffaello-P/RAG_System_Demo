@@ -1,0 +1,59 @@
+# Configurazione del database PostgreSQL con pgvector
+vector_db:
+  DB_NAME: "DB_NAME"
+  DB_USER: "DB_USER"
+  DB_PASSWORD: "!DB_PASSWORD"
+  DB_HOST: "DB_HOST"
+  DB_PORT: 0000
+  DB_VECTOR_TABLE: "DB_VECTOR_TABLE"
+
+# Configurazione llm
+llm:
+  model_name: "gemma2:2b"                           # Modello selezionato
+  api_url: "http://localhost:11434/api/generate"    # URL dell'API Gemma2
+  api_key: "your_api_key_here"                      # Chiave API per autenticazione se necessario
+  max_tokens: 400                                   # Numero massimo di token per richiesta
+  temperature: 0.7                                  # Parametro di temperatura per la generazione del modello
+
+# Configurazione documenti
+paths:
+  documents_dir: "../documents"                     # Percorso della cartella dei PDF
+  # output_dir: "../output"                           # Percorso per i file generati (opzionale)
+
+# Configurazione modello di embedding
+embedding_model:
+  #model_name: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+  model_name: "sentence-transformers/multi-qa-mpnet-base-dot-v1"  # Modello di embedding
+  embedding_dim: 512                   # Dimensione degli embedding generati dal modello
+
+chunks:
+  max_chunk: 300
+  chunk_overlap: 50
+
+# Configurazione Retrieval
+retrieval:
+  top_k: 5
+
+# Configurazione prompt
+prompt: |
+  Sei un esperto informatico specializzato in Data Science. Usa il seguente contesto (context) per rispondere alla query
+  Context: {context}
+
+  Query: {query}
+
+  Fornisci una risposta precisa di massimo 4 frasi. Concludi con una citazione famosa e profonda in italiano.
+
+  Answer:
+
+# Configurazione prompt
+prompt_preprocessing: |
+  Sei un esperto Data Scientist.
+  
+  Context: {context}
+
+  Query: Basati unicamente sul contesto proposto di seguito per elaborare un riassunto.
+
+  Puoi evitare di andare a capo nel riassunto e puoi usare massimo 300 parole (puoi usarne meno se necessario).
+
+  Answer:
+
